@@ -5,43 +5,42 @@ using cedal_backend.ClientInterfaces;
 using cedal_backend.Dto;
 using cedal_backend.Enums;
 using cedal_backend.Interfaces;
-using cedal_backend.Models;
 
 namespace cedal_backend.Services
 {
-  public class EventService : IEventService
-  {
-    private readonly IEventClient _eventClient;
-
-    public EventService(IEventClient eventClient)
+    public class EventService : IEventService
     {
-      _eventClient = eventClient;
-    }
+        private readonly IEventClient _eventClient;
 
-    public async Task<IEnumerable<EventDto>> ListOfUpcomingEventsAsync()
-    {
-      var events = await _eventClient.GetEventListAsync();
-
-      return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Upcoming).Select(cedalEvent =>
-        new EventDto()
+        public EventService(IEventClient eventClient)
         {
-          Name = cedalEvent.Name,
-          Date = cedalEvent.DateTime,
-          Description = cedalEvent.Description
-        });
-    }
+            _eventClient = eventClient;
+        }
 
-    public async Task<IEnumerable<EventDto>> ListOfPassedEventsAsync()
-    {
-      var events = await _eventClient.GetEventListAsync();
-
-      return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Passed).Select(cedalEvent =>
-        new EventDto()
+        public async Task<IEnumerable<EventDto>> ListOfUpcomingEventsAsync()
         {
-          Name = cedalEvent.Name,
-          Date = cedalEvent.DateTime,
-          Description = cedalEvent.Description
-        });
+            var events = await _eventClient.GetEventListAsync();
+
+            return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Upcoming).Select(cedalEvent =>
+              new EventDto()
+              {
+                  Name = cedalEvent.Name,
+                  Date = cedalEvent.DateTime,
+                  Description = cedalEvent.Description
+              });
+        }
+
+        public async Task<IEnumerable<EventDto>> ListOfPassedEventsAsync()
+        {
+            var events = await _eventClient.GetEventListAsync();
+
+            return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Passed).Select(cedalEvent =>
+              new EventDto()
+              {
+                  Name = cedalEvent.Name,
+                  Date = cedalEvent.DateTime,
+                  Description = cedalEvent.Description
+              });
+        }
     }
-  }
 }

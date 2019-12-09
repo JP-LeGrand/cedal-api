@@ -4,8 +4,8 @@ using cedal_backend.Models;
 
 namespace cedal_backend.ClientInterfaces
 {
-  public interface IEventClient
-  {
-    Task<IEnumerable<Event>> GetEventListAsync();
-  }
+    public interface IEventClient
+    {
+        Task<IEnumerable<Event>> GetEventListAsync();
+    }
 }
