@@ -36,10 +36,10 @@ namespace cedal_backend
 
             //Add Http Clients
             services.AddHttpClient<IEventClient, CedalEventClient>("Event")
-                .ConfigureHttpClient(client => client.BaseAddress = new Uri(Configuration["EventService:BaseUrl"]));
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(Configuration["CedalClient:BaseUrl"]));
 
             services.AddHttpClient<IApplicantClient, CedalApplicantClient>("Applicant")
-                .ConfigureHttpClient(client => client.BaseAddress = new Uri(Configuration["ApplicantService:BaseUrl"]));
+                .ConfigureHttpClient(client => client.BaseAddress = new Uri(Configuration["CedalClient:BaseUrl"]));
 
             services.AddSwaggerGen(c =>
             {

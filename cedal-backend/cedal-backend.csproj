@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>cedal_backend</RootNamespace>
+    <UserSecretsId>72cc2d09-34a9-41b0-8f69-420f8821a45f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
