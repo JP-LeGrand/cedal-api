@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -40,36 +41,6 @@ namespace cedal_backend.Controllers
             return applicant;
         }
 
-        // PUT: api/Applicants/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutApplicant(string id, Applicant applicant)
-        {
-            if (id != applicant.ID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(applicant).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ApplicantExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         // POST: api/Applicants
         [HttpPost]
         public async Task<ActionResult<Applicant>> PostApplicant(Applicant applicant)
@@ -77,7 +48,7 @@ namespace cedal_backend.Controllers
             _context.Applicants.Add(applicant);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetApplicant", new { id = applicant.ID }, applicant);
+            return CreatedAtAction("GetApplicant", new { id = applicant.Id }, applicant);
         }
 
         // DELETE: api/Applicants/5
@@ -96,9 +67,9 @@ namespace cedal_backend.Controllers
             return applicant;
         }
 
-        private bool ApplicantExists(string id)
+        private bool ApplicantExists(Guid? id)
         {
-            return _context.Applicants.Any(e => e.ID == id);
+            return _context.Applicants.Any(e => e.Id == id);
         }
     }
 }

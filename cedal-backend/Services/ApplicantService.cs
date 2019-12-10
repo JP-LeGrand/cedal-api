@@ -25,7 +25,7 @@ namespace cedal_backend.Services
             {
                 Name = applicant.Name,
                 LastName = applicant.LastName,
-                IdNumber = applicant.ID,
+                IdNumber = applicant.IdNumber,
                 ContactNumber = applicant.ContactNumber,
                 Email = applicant.Email
             });
