@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cedal_backend.Data;
 
 namespace cedal_backend.Migrations
 {
     [DbContext(typeof(CedalContext))]
-    partial class CedalContextModelSnapshot : ModelSnapshot
+    [Migration("20191212230829_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,21 +48,22 @@ namespace cedal_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("ApplicantId");
+                    b.Property<int?>("ApplicantUserId");
 
                     b.Property<int>("EducationType");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicantId");
+                    b.HasIndex("ApplicantUserId");
 
                     b.ToTable("Educations");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.Event", b =>
                 {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int?>("EventId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("AddressID");
 
@@ -74,9 +77,11 @@ namespace cedal_backend.Migrations
 
                     b.Property<int>("EventTypes");
 
+                    b.Property<Guid?>("Id");
+
                     b.Property<string>("Name");
 
-                    b.HasKey("Id");
+                    b.HasKey("EventId");
 
                     b.HasIndex("AddressID");
 
@@ -89,13 +94,13 @@ namespace cedal_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("ApplicantId");
+                    b.Property<int?>("ApplicantUserId");
 
                     b.Property<int>("LanguageType");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicantId");
+                    b.HasIndex("ApplicantUserId");
 
                     b.ToTable("Languages");
                 });
@@ -106,21 +111,22 @@ namespace cedal_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("ApplicantId");
+                    b.Property<int?>("ApplicantUserId");
 
                     b.Property<int>("SchoolSubjects");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicantId");
+                    b.HasIndex("ApplicantUserId");
 
                     b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.User", b =>
                 {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int?>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ContactNumber");
 
@@ -131,6 +137,8 @@ namespace cedal_backend.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<Guid?>("Id");
+
                     b.Property<string>("IdNumber");
 
                     b.Property<string>("LastName");
@@ -139,7 +147,7 @@ namespace cedal_backend.Migrations
 
                     b.Property<int?>("UserType");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
 
@@ -152,13 +160,13 @@ namespace cedal_backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("ApplicantId");
+                    b.Property<int?>("ApplicantUserId");
 
                     b.Property<int>("DaysOfTheWeek");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicantId");
+                    b.HasIndex("ApplicantUserId");
 
                     b.ToTable("WeekDays");
                 });
@@ -171,7 +179,7 @@ namespace cedal_backend.Migrations
 
                     b.Property<int?>("Availability");
 
-                    b.Property<Guid?>("ContactPersonId");
+                    b.Property<int?>("ContactPersonUserId");
 
                     b.Property<string>("DescriptionOfTrainingExperience");
 
@@ -217,7 +225,7 @@ namespace cedal_backend.Migrations
 
                     b.HasIndex("AddressID");
 
-                    b.HasIndex("ContactPersonId");
+                    b.HasIndex("ContactPersonUserId");
 
                     b.HasDiscriminator().HasValue("Applicant");
                 });
@@ -226,7 +234,7 @@ namespace cedal_backend.Migrations
                 {
                     b.HasOne("cedal_backend.Models.Applicant")
                         .WithMany("EducationPreference")
-                        .HasForeignKey("ApplicantId");
+                        .HasForeignKey("ApplicantUserId");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.Event", b =>
@@ -240,21 +248,21 @@ namespace cedal_backend.Migrations
                 {
                     b.HasOne("cedal_backend.Models.Applicant")
                         .WithMany("Languages")
-                        .HasForeignKey("ApplicantId");
+                        .HasForeignKey("ApplicantUserId");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.Subjects", b =>
                 {
                     b.HasOne("cedal_backend.Models.Applicant")
                         .WithMany("SubjectsToTeach")
-                        .HasForeignKey("ApplicantId");
+                        .HasForeignKey("ApplicantUserId");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.WeekDays", b =>
                 {
                     b.HasOne("cedal_backend.Models.Applicant")
                         .WithMany("DaysAvailable")
-                        .HasForeignKey("ApplicantId");
+                        .HasForeignKey("ApplicantUserId");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.Applicant", b =>
@@ -265,7 +273,7 @@ namespace cedal_backend.Migrations
 
                     b.HasOne("cedal_backend.Models.User", "ContactPerson")
                         .WithMany()
-                        .HasForeignKey("ContactPersonId");
+                        .HasForeignKey("ContactPersonUserId");
                 });
 #pragma warning restore 612, 618
         }

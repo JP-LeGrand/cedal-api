@@ -71,7 +71,7 @@ namespace cedal_backend.Controllers
             _context.Events.Add(@event);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvent", new { id = @event.EventId }, @event);
+            return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
         }
 
         // DELETE: api/Events/5
@@ -92,7 +92,7 @@ namespace cedal_backend.Controllers
 
         private bool EventExists(Guid? id)
         {
-            return _context.Events.Any(e => e.EventId == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

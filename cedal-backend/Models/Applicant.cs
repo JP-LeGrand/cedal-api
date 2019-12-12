@@ -13,7 +13,7 @@ namespace cedal_backend.Models
         public string Hobbies { get; set; }
         public bool? DriverLicence { get; set; }
         public bool? OwnCar { get; set; }
-        public IEnumerable<LanguageType> Languages { get; set; }
+        public IEnumerable<Languages> Languages { get; set; }
 
         //Contact Person
         public User ContactPerson { get; set; }
@@ -33,10 +33,10 @@ namespace cedal_backend.Models
         public AvailabilityTypes? Availability { get; set; }
         public TimePreferences? TimePreferences { get; set; }
         public string OtherPreference { get; set; }
-        public IEnumerable<DaysOfTheWeek> DaysAvailable { get; set; }
-        public IEnumerable<SchoolSubjects> SubjectsToTeach { get; set; }
+        public IEnumerable<WeekDays> DaysAvailable { get; set; }
+        public IEnumerable<Subjects> SubjectsToTeach { get; set; }
         public string OtherMeansOfHelp { get; set; }
-        public IEnumerable<EducationType> EducationPreference { get; set; }
+        public IEnumerable<Education> EducationPreference { get; set; }
 
         //References
         public string RefName { get; set; }
