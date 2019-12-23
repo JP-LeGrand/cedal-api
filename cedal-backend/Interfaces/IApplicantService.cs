@@ -4,7 +4,7 @@ using cedal_backend.Dto;
 
 namespace cedal_backend.Interfaces
 {
-    interface IApplicantService
+    public interface IApplicantService
     {
         Task<IEnumerable<ApplicantDto>> ListOfApplicantAsync();
 
