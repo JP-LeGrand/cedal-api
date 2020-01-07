@@ -5,7 +5,7 @@ namespace cedal_backend.Data
 {
     public class CedalContext : DbContext
     {
-        public CedalContext(DbContextOptions options) : base(options)
+        public CedalContext(DbContextOptions<CedalContext> options) : base(options)
         {
         }
 

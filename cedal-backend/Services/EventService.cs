@@ -14,7 +14,7 @@ namespace cedal_backend.Services
         {
             return events.Select(cedalEvent => new EventDto()
             {
-                EventTypes = cedalEvent.EventTypes,
+                EventTypes = cedalEvent.EventType,
                 Date = cedalEvent.DateTime,
                 Description = cedalEvent.Description,
                 Name = cedalEvent.Name
@@ -23,36 +23,20 @@ namespace cedal_backend.Services
 
         public async Task<IEnumerable<EventDto>> ListOfUpcomingEventsAsync(IEnumerable<Event> events)
         {
-            return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Upcoming).Select(cedalEvent =>
-              new EventDto()
-              {
-                  Name = cedalEvent.Name,
-                  Date = cedalEvent.DateTime,
-                  Description = cedalEvent.Description,
-                  EventTypes = cedalEvent.EventTypes
-              });
+            var allEvents = await GetAllEventsAsync(events);
+            return allEvents.Where(dto => dto.EventTypes == EventTypes.Upcoming);
         }
 
         public async Task<IEnumerable<EventDto>> ListOfPassedEventsAsync(IEnumerable<Event> events)
         {
-            return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Passed).Select(cedalEvent =>
-           new EventDto()
-           {
-               Name = cedalEvent.Name,
-               Date = cedalEvent.DateTime,
-               Description = cedalEvent.Description
-           });
+            var allEvents = await GetAllEventsAsync(events);
+            return allEvents.Where(dto => dto.EventTypes == EventTypes.Passed);
         }
 
         public async Task<int> NumberOfEventsHeld(IEnumerable<Event> events)
         {
-            return events.Where(cedalEvent => cedalEvent.EventTypes == EventTypes.Passed).Select(cedalEvent =>
-                  new EventDto()
-                  {
-                      Name = cedalEvent.Name,
-                      Date = cedalEvent.DateTime,
-                      Description = cedalEvent.Description
-                  }).Count();
+            var allEvents = await GetAllEventsAsync(events);
+            return allEvents.Count();
         }
     }
 }

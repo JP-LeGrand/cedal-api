@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace cedal_backend.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace cedal_backend.Migrations
                 name: "Addresses",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     City = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
@@ -22,32 +22,30 @@ namespace cedal_backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Addresses", x => x.ID);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
-                    EventId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Id = table.Column<Guid>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     DateTime = table.Column<DateTime>(nullable: false),
-                    AddressID = table.Column<int>(nullable: true),
-                    EventTypes = table.Column<int>(nullable: false),
+                    EventAddressId = table.Column<int>(nullable: true),
+                    EventType = table.Column<int>(nullable: false),
                     EventImage = table.Column<string>(nullable: true),
                     EventDamage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Events", x => x.EventId);
+                    table.PrimaryKey("PK_Events", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Events_Addresses_AddressID",
-                        column: x => x.AddressID,
+                        name: "FK_Events_Addresses_EventAddressId",
+                        column: x => x.EventAddressId,
                         principalTable: "Addresses",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -55,9 +53,7 @@ namespace cedal_backend.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Id = table.Column<Guid>(nullable: true),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
@@ -66,14 +62,14 @@ namespace cedal_backend.Migrations
                     IdNumber = table.Column<string>(nullable: true),
                     UserType = table.Column<int>(nullable: true),
                     Discriminator = table.Column<string>(nullable: false),
-                    AddressID = table.Column<int>(nullable: true),
+                    AddressId = table.Column<int>(nullable: true),
                     MaritalStatus = table.Column<int>(nullable: true),
                     Disabilities = table.Column<bool>(nullable: true),
                     DisabilityDetails = table.Column<string>(nullable: true),
                     Hobbies = table.Column<string>(nullable: true),
                     DriverLicence = table.Column<bool>(nullable: true),
                     OwnCar = table.Column<bool>(nullable: true),
-                    ContactPersonUserId = table.Column<int>(nullable: true),
+                    ContactPersonId = table.Column<Guid>(nullable: true),
                     EducationDescription = table.Column<string>(nullable: true),
                     EmploymentStatus = table.Column<int>(nullable: true),
                     WorkExperience = table.Column<string>(nullable: true),
@@ -93,18 +89,18 @@ namespace cedal_backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Addresses_AddressID",
-                        column: x => x.AddressID,
+                        name: "FK_Users_Addresses_AddressId",
+                        column: x => x.AddressId,
                         principalTable: "Addresses",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Users_ContactPersonUserId",
-                        column: x => x.ContactPersonUserId,
+                        name: "FK_Users_Users_ContactPersonId",
+                        column: x => x.ContactPersonId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -115,16 +111,16 @@ namespace cedal_backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EducationType = table.Column<int>(nullable: false),
-                    ApplicantUserId = table.Column<int>(nullable: true)
+                    ApplicantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Educations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Educations_Users_ApplicantUserId",
-                        column: x => x.ApplicantUserId,
+                        name: "FK_Educations_Users_ApplicantId",
+                        column: x => x.ApplicantId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -135,16 +131,16 @@ namespace cedal_backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     LanguageType = table.Column<int>(nullable: false),
-                    ApplicantUserId = table.Column<int>(nullable: true)
+                    ApplicantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Languages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Languages_Users_ApplicantUserId",
-                        column: x => x.ApplicantUserId,
+                        name: "FK_Languages_Users_ApplicantId",
+                        column: x => x.ApplicantId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -155,16 +151,16 @@ namespace cedal_backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SchoolSubjects = table.Column<int>(nullable: false),
-                    ApplicantUserId = table.Column<int>(nullable: true)
+                    ApplicantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Subjects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subjects_Users_ApplicantUserId",
-                        column: x => x.ApplicantUserId,
+                        name: "FK_Subjects_Users_ApplicantId",
+                        column: x => x.ApplicantId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -175,53 +171,53 @@ namespace cedal_backend.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DaysOfTheWeek = table.Column<int>(nullable: false),
-                    ApplicantUserId = table.Column<int>(nullable: true)
+                    ApplicantId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WeekDays", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WeekDays_Users_ApplicantUserId",
-                        column: x => x.ApplicantUserId,
+                        name: "FK_WeekDays_Users_ApplicantId",
+                        column: x => x.ApplicantId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Educations_ApplicantUserId",
+                name: "IX_Educations_ApplicantId",
                 table: "Educations",
-                column: "ApplicantUserId");
+                column: "ApplicantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_AddressID",
+                name: "IX_Events_EventAddressId",
                 table: "Events",
-                column: "AddressID");
+                column: "EventAddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Languages_ApplicantUserId",
+                name: "IX_Languages_ApplicantId",
                 table: "Languages",
-                column: "ApplicantUserId");
+                column: "ApplicantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subjects_ApplicantUserId",
+                name: "IX_Subjects_ApplicantId",
                 table: "Subjects",
-                column: "ApplicantUserId");
+                column: "ApplicantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_AddressID",
+                name: "IX_Users_AddressId",
                 table: "Users",
-                column: "AddressID");
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_ContactPersonUserId",
+                name: "IX_Users_ContactPersonId",
                 table: "Users",
-                column: "ContactPersonUserId");
+                column: "ContactPersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeekDays_ApplicantUserId",
+                name: "IX_WeekDays_ApplicantId",
                 table: "WeekDays",
-                column: "ApplicantUserId");
+                column: "ApplicantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

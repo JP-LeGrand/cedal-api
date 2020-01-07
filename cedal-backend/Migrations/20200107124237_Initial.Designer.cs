@@ -10,8 +10,8 @@ using cedal_backend.Data;
 namespace cedal_backend.Migrations
 {
     [DbContext(typeof(CedalContext))]
-    [Migration("20191212231229_Updated-Models")]
-    partial class UpdatedModels
+    [Migration("20200107124237_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace cedal_backend.Migrations
 
             modelBuilder.Entity("cedal_backend.Models.Address", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -37,7 +37,7 @@ namespace cedal_backend.Migrations
 
                     b.Property<string>("Street");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Addresses");
                 });
@@ -64,23 +64,23 @@ namespace cedal_backend.Migrations
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AddressID");
-
                     b.Property<DateTime>("DateTime");
 
                     b.Property<string>("Description");
+
+                    b.Property<int?>("EventAddressId");
 
                     b.Property<string>("EventDamage");
 
                     b.Property<string>("EventImage");
 
-                    b.Property<int>("EventTypes");
+                    b.Property<int>("EventType");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressID");
+                    b.HasIndex("EventAddressId");
 
                     b.ToTable("Events");
                 });
@@ -169,7 +169,7 @@ namespace cedal_backend.Migrations
                 {
                     b.HasBaseType("cedal_backend.Models.User");
 
-                    b.Property<int?>("AddressID");
+                    b.Property<int?>("AddressId");
 
                     b.Property<int?>("Availability");
 
@@ -217,7 +217,7 @@ namespace cedal_backend.Migrations
 
                     b.Property<string>("WorkExperience");
 
-                    b.HasIndex("AddressID");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("ContactPersonId");
 
@@ -233,9 +233,9 @@ namespace cedal_backend.Migrations
 
             modelBuilder.Entity("cedal_backend.Models.Event", b =>
                 {
-                    b.HasOne("cedal_backend.Models.Address", "Address")
+                    b.HasOne("cedal_backend.Models.Address", "EventAddress")
                         .WithMany()
-                        .HasForeignKey("AddressID");
+                        .HasForeignKey("EventAddressId");
                 });
 
             modelBuilder.Entity("cedal_backend.Models.Languages", b =>
@@ -263,7 +263,7 @@ namespace cedal_backend.Migrations
                 {
                     b.HasOne("cedal_backend.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressID");
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("cedal_backend.Models.User", "ContactPerson")
                         .WithMany()

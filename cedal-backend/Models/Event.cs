@@ -9,8 +9,8 @@ namespace cedal_backend.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DateTime { get; set; }
-        public Address Address { get; set; }
-        public EventTypes EventTypes { get; set; }
+        public Address EventAddress { get; set; }
+        public EventTypes EventType { get; set; }
         public string EventImage { get; set; }
         public string EventDamage { get; set; }
     }

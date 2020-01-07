@@ -70,7 +70,7 @@ namespace cedal_backend.Controllers
 
         // GET: api/Events/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(int id)
+        public async Task<ActionResult<Event>> GetEvent(Guid? id)
         {
             var @event = await _context.Events.FindAsync(id);
 
@@ -84,10 +84,19 @@ namespace cedal_backend.Controllers
 
         // POST: api/Events
         [HttpPost]
+        [Route("CreateEvent")]
+        [ProducesResponseType(typeof(Event), StatusCodes.Status201Created)]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-            _context.Events.Add(@event);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Events.Add(@event);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+            }
 
             return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
         }

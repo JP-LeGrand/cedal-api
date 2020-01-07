@@ -28,9 +28,14 @@ namespace CedalAPITests.Helpers
             return $"{ApiPrefix}/{EventsController}/AllEvents";
         }
 
-        public static string GetNumberOfEventss()
+        public static string GetNumberOfEvents()
         {
             return $"{ApiPrefix}/{EventsController}/NumberOfEvents";
+        }
+
+        public static string CreateEvent()
+        {
+            return $"{ApiPrefix}/{EventsController}/CreateEvent";
         }
 
         #endregion
