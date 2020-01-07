@@ -1,25 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using cedal_backend.ClientInterfaces;
 using cedal_backend.Dto;
 using cedal_backend.Enums;
 using cedal_backend.Interfaces;
+using cedal_backend.Models;
 
 namespace cedal_backend.Services
 {
     public class ApplicantService : IApplicantService
     {
-        private readonly IApplicantClient _applicantClient;
-
-        public ApplicantService(IApplicantClient applicantClient)
+        public async Task<IEnumerable<ApplicantDto>> ListOfApplicantAsync(IEnumerable<Applicant> applicants)
         {
-            _applicantClient = applicantClient;
-        }
-        public async Task<IEnumerable<ApplicantDto>> ListOfApplicantAsync()
-        {
-            var applicants = await _applicantClient.GetApplicantListAsync();
-
             //Looping through the applicants and then mapping
             return applicants.Where(applicant => applicant.UserType == UserTypes.Applicant).Select(applicant => new ApplicantDto()
             {
@@ -29,6 +21,12 @@ namespace cedal_backend.Services
                 ContactNumber = applicant.ContactNumber,
                 Email = applicant.Email
             });
+        }
+
+        public async Task<int> NumberOfApplicantAsync(IEnumerable<Applicant> applicants)
+        {
+            var numberOfApplicants = await ListOfApplicantAsync(applicants);
+            return numberOfApplicants.Count();
         }
     }
 }

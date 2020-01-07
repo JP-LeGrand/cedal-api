@@ -17,7 +17,7 @@ namespace cedal_backend.Clients
         }
         public async Task<IEnumerable<Event>> GetEventListAsync()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{CedalResourceUrls.EventUrl}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{CedalResourceUrls.ApiPrefix}/{CedalResourceUrls.EventUrl}/AllEvents");
 
             var response = await _httpClient.SendAsync(request);
             if (!response.IsSuccessStatusCode)

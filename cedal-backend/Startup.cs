@@ -16,12 +16,14 @@ namespace cedal_backend
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            HostingEnvironment = hostingEnvironment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -31,26 +33,37 @@ namespace cedal_backend
             //Add Applicant service
             services.AddTransient<IApplicantService, ApplicantService>();
 
+            //Add Administrative service
+            services.AddTransient<IAdministrationService, AdministrationService>();
+
             //Add Event Service
             services.AddTransient<IEventService, EventService>();
 
             //Add Http Clients
-            services.AddHttpClient<IEventClient, CedalEventClient>("Event")
-                .ConfigureHttpClient(client => client.BaseAddress = new Uri(Configuration["CedalClient:BaseUrl"]));
+            services.AddHttpClient<IEventClient, CedalEventClient>("Event",
+                configure =>
+                {
+                    configure.BaseAddress = new Uri(Configuration["CedalClient:BaseUrl"]);
+                    configure.Timeout = new TimeSpan(0, 5, 0);
+                });
 
-            services.AddHttpClient<IApplicantClient, CedalApplicantClient>("Applicant")
-                .ConfigureHttpClient(client => client.BaseAddress = new Uri(Configuration["CedalClient:BaseUrl"]));
+            services.AddHttpClient<IApplicantClient, CedalApplicantClient>("Applicant",
+                configure =>
+                {
+                    configure.BaseAddress = new Uri(Configuration["CedalClient:BaseUrl"]);
+                    configure.Timeout = new TimeSpan(0, 5, 0);
+                });
 
             services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

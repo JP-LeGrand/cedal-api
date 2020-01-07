@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cedal-backend", "cedal-backend\cedal-backend.csproj", "{8DAE3D97-B5AB-47E2-AEBF-414A79673C64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cedal-backend", "cedal-backend\cedal-backend.csproj", "{8DAE3D97-B5AB-47E2-AEBF-414A79673C64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CedalAPITests", "CedalAPITests\CedalAPITests.csproj", "{7F3A31E8-DC7A-4AA7-A239-2A57B57902D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8DAE3D97-B5AB-47E2-AEBF-414A79673C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DAE3D97-B5AB-47E2-AEBF-414A79673C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DAE3D97-B5AB-47E2-AEBF-414A79673C64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3A31E8-DC7A-4AA7-A239-2A57B57902D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3A31E8-DC7A-4AA7-A239-2A57B57902D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3A31E8-DC7A-4AA7-A239-2A57B57902D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3A31E8-DC7A-4AA7-A239-2A57B57902D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

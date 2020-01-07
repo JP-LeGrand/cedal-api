@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using cedal_backend.Data;
 using cedal_backend.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace cedal_backend.Controllers
 {

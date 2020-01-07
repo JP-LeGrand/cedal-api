@@ -13,16 +13,6 @@ namespace cedal_backend.Controllers
             _administrationService = administrationService;
         }
 
-        [HttpGet("NumberOfApplicants")]
-        public async Task<ActionResult<int>> GetNumberOfApplicants()
-        {
-            return await _administrationService.NumberOfApplicants();
-        }
 
-        [HttpGet("NumberOfOrganisations")]
-        public async Task<ActionResult<int>> GetNumberOfOrganisations()
-        {
-            return await _administrationService.NumberOfOrganisationsAssisted();
-        }
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using cedal_backend.ClientInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,6 @@ namespace cedal_backend.Controllers
     {
         private readonly CedalContext _context;
         private readonly IEventService _eventService;
-        private readonly IEventClient _eventClient;
 
         public EventsController(CedalContext context, IEventService eventService)
         {
@@ -35,19 +33,39 @@ namespace cedal_backend.Controllers
         }
 
         [HttpGet]
-        [Route("UpcomingEvents")]
-        [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetUpcomingEvents()
+        [Route("AllEvents")]
+        [ProducesResponseType(typeof(IEnumerable<EventDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<Event>>> GetAllEvents()
         {
-            return Ok((await _eventService.ListOfUpcomingEventsAsync()));
+            var events = await GetEvents();
+            return Ok((await _eventService.GetAllEventsAsync(events.Value)));
+        }
+
+        [HttpGet]
+        [Route("UpcomingEvents")]
+        [ProducesResponseType(typeof(IEnumerable<EventDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<EventDto>>> GetUpcomingEvents()
+        {
+            var events = await GetEvents();
+            return Ok((await _eventService.ListOfUpcomingEventsAsync(events.Value)));
         }
 
         [HttpGet]
         [Route("PassedEvents")]
-        [ProducesResponseType(typeof(EventDto), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Event>>> GetPassedEvents()
+        [ProducesResponseType(typeof(IEnumerable<EventDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<EventDto>>> GetPassedEvents()
         {
-            return Ok((await _eventService.ListOfPassedEventsAsync()));
+            var events = await GetEvents();
+            return Ok((await _eventService.ListOfPassedEventsAsync(events.Value)));
+        }
+
+        [HttpGet]
+        [Route("NumberOfEvents")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        public async Task<ActionResult<int>> GetNumberOfEventsHeld()
+        {
+            var events = await GetEvents();
+            return Ok((await _eventService.NumberOfEventsHeld(events.Value)));
         }
 
         // GET: api/Events/5

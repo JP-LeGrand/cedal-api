@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using cedal_backend.Data;
+using cedal_backend.Dto;
+using cedal_backend.Interfaces;
 using cedal_backend.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace cedal_backend.Controllers
 {
@@ -14,10 +17,11 @@ namespace cedal_backend.Controllers
     public class ApplicantsController : ControllerBase
     {
         private readonly CedalContext _context;
-
-        public ApplicantsController(CedalContext context)
+        private readonly IApplicantService _applicantService;
+        public ApplicantsController(CedalContext context, IApplicantService applicantService)
         {
             _context = context;
+            _applicantService = applicantService;
         }
 
         // GET: api/Applicants
@@ -25,6 +29,24 @@ namespace cedal_backend.Controllers
         public async Task<ActionResult<IEnumerable<Applicant>>> GetApplicants()
         {
             return await _context.Applicants.ToListAsync();
+        }
+
+        [HttpGet]
+        [Route("ListOfApplicants")]
+        [ProducesResponseType(typeof(IEnumerable<ApplicantDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<ApplicantDto>>> GetListOfApplicants()
+        {
+            var applicants = await GetApplicants();
+            return Ok(await _applicantService.ListOfApplicantAsync(applicants.Value));
+        }
+
+        [HttpGet]
+        [Route("NumberOfApplicants")]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        public async Task<ActionResult<int>> GetNumberOfApplicants()
+        {
+            var applicants = await GetApplicants();
+            return Ok(await _applicantService.NumberOfApplicantAsync(applicants.Value));
         }
 
         // GET: api/Applicants/5
