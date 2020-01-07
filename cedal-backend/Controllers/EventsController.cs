@@ -88,16 +88,8 @@ namespace cedal_backend.Controllers
         [ProducesResponseType(typeof(Event), StatusCodes.Status201Created)]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-            try
-            {
-                _context.Events.Add(@event);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-
-            }
-
+            _context.Events.Add(@event);
+            await _context.SaveChangesAsync();
             return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
         }
 

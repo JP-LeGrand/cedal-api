@@ -65,6 +65,7 @@ namespace cedal_backend.Controllers
 
         // POST: api/Applicants
         [HttpPost]
+        [ProducesResponseType(typeof(Applicant), StatusCodes.Status201Created)]
         public async Task<ActionResult<Applicant>> PostApplicant(Applicant applicant)
         {
             _context.Applicants.Add(applicant);

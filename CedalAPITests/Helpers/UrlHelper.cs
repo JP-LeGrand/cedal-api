@@ -51,6 +51,11 @@ namespace CedalAPITests.Helpers
             return $"{ApiPrefix}/{ApplicantsController}/NumberOfApplicants";
         }
 
+        public static string CreateApplicants()
+        {
+            return $"{ApiPrefix}/{ApplicantsController}";
+        }
+
         #endregion
 
     }
