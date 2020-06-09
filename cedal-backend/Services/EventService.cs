@@ -14,10 +14,13 @@ namespace cedal_backend.Services
         {
             return events.Select(cedalEvent => new EventDto()
             {
+                EventId = cedalEvent.Id,
                 EventTypes = cedalEvent.EventType,
                 Date = cedalEvent.DateTime,
                 Description = cedalEvent.Description,
-                Name = cedalEvent.Name
+                Name = cedalEvent.Name,
+                EventAddress = cedalEvent.EventAddress,
+                EventImage = cedalEvent.EventImage
             });
         }
 

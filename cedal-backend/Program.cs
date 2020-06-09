@@ -31,7 +31,6 @@ namespace cedal_backend
                 .UseStartup<Startup>()
                 .UseUrls(hostUrl)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseKestrel()
                 .UseIISIntegration();
     }
 }

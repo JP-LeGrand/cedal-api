@@ -58,6 +58,11 @@ namespace cedal_backend
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 });
+
+            // Enable CORS (Cross Origin Requests) so that the React app on a different URL can access it
+            // See https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-2.1
+            services.AddCors();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +86,9 @@ namespace cedal_backend
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             app.UseMvc();
         }
     }
