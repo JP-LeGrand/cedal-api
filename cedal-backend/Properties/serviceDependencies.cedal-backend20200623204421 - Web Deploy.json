@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.KeyVault/vaults/cedalbackendvault",
+      "type": "secrets.keyVault",
+      "connectionId": "ASPNETCORE_HOSTINGSTARTUP__KEYVAULT__CONFIGURATIONVAULT",
+      "secretStore": "AzureAppSettings"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroup')]/providers/Microsoft.Sql/servers/cedal/databases/CedalDb",
+      "type": "mssql.azure",
+      "connectionId": "DefaultConnection",
+      "secretStore": "AzureKeyVault"
+    }
+  }
+}
